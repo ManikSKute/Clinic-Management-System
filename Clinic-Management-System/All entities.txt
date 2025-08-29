@@ -1,0 +1,162 @@
+package com.clinic.entity;
+
+@Data
+@Entity
+@Table(name = "users")
+public class Users {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long user_id;
+	
+	private String username;
+	
+	private String password;
+	
+	private Role role;
+}
+--------------------------------
+package com.clinic.entity;
+
+public enum Role {
+
+	ADMIN,
+	DOCTOR,
+	PATIENT,
+	RECEPTIONIST;
+}
+--------------------------------
+package com.clinic.entity;
+
+@Data
+@Entity
+@Table(name = "patients")
+public class Patients {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long patient_id;
+	
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private Users user;
+	
+	private String name;
+	
+	private int age;
+	
+	private Gender gender;
+	
+	private String contact;
+	
+	private String address;
+	
+	private String medical_history;
+}
+---------------------------------------------
+package com.clinic.entity;
+
+public enum Gender {
+
+	MALE,
+	FEMALE;
+}
+--------------------------------------------
+package com.clinic.entity;
+
+@Data
+@Entity
+@Table(name = "doctors")
+public class Doctors {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long doctor_id;
+	
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private Users user;
+	
+	private String name;
+	
+	private String specialization;
+	
+	private String contact;
+	
+	private String availability;
+}
+-------------------------------------------------
+package com.clinic.entity;
+
+@Data
+@Entity
+@Table(name = "appointments")
+public class Appointments {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long appointment_id;
+	
+	@OneToOne
+	@JoinColumn
+	private Patients patient_id;
+	
+	@OneToOne
+	@JoinColumn
+	private Doctors doctor_id;
+	
+	private LocalDateTime date;
+	
+	private LocalDateTime time;
+	
+	private Status status;
+}
+------------------------------------------------
+package com.clinic.entity;
+
+@Data
+@Entity
+@Table(name = "prescriptions")
+public class Prescriptions {
+
+	private long prescription_id;
+	
+	@JoinColumn
+	private Appointments appointment_id;
+	
+	@JoinColumn
+	private Doctors doctor_id;
+	
+	@JoinColumn
+	private Patients patient_id;
+}
+-------------------------------------------------------------
+package com.clinic.entity;
+
+@Data
+@Entity
+@Table(name = "billing")
+public class Billing {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long bill_id;
+	
+	@JoinColumn
+	private Appointments appointment_id;
+	
+	private double amount;
+	
+	private Payment payment_staus;
+	
+	private LocalDateTime date;
+}
+--------------------------------------------------------------
+package com.clinic.entity;
+
+public enum Payment {
+
+	PAID,
+	FAILED,
+	PENDING
+}
