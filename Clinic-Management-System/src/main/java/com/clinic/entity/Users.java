@@ -13,19 +13,21 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "users")
-public class Users {
+public class Users  {
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long user_id;
-	
+
 	@Column(nullable = false, unique = true, length = 50)
 	private String username;
-	
+
 	@Column(nullable = false, length = 100)
 	private String password;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
+
 }

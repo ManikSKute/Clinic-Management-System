@@ -28,4 +28,8 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepo.deleteById(id);
     }
+
+	public boolean existsByUsername(String username) {
+		return userRepo.existsByUsername(username);
+	}
 }

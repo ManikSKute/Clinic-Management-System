@@ -1,9 +1,15 @@
 package com.clinic.entity;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
 
-	ADMIN,
-	DOCTOR,
-	PATIENT,
-	RECEPTIONIST;
+public enum Role implements GrantedAuthority {
+    ADMIN,
+    DOCTOR,
+    PATIENT,
+    RECEPTIONIST;
+
+    @Override
+    public String getAuthority() {
+        return "ROLE_" + name();
+    }
 }

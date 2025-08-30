@@ -1,56 +1,39 @@
 package com.clinic.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.clinic.entity.Doctors;
-import com.clinic.entity.Role;
-import com.clinic.entity.Users;
-import com.clinic.service.DoctorService;
-
+import com.clinic.entity.Appointments;
+import com.clinic.entity.Prescriptions;
+import com.clinic.service.AppointmentService;
+import com.clinic.service.PrescriptionService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/doctor")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('DOCTOR')")
 public class DoctorController {
 
-	private final DoctorService doctorService;
-	
-	// Register new doctor
-    @PostMapping("/register")
-    public Doctors register(@RequestBody Doctors doctor) {
-        Users user = new Users();
-        user.setUsername(doctor.getUser().getUsername());
-        user.setPassword(doctor.getUser().getPassword());
-        user.setRole(Role.DOCTOR);
+    private final PrescriptionService prescriptionService;
+    private final AppointmentService appointmentService;
 
-        doctor.setUser(user);
-        return doctorService.registerDoctor(user, doctor);
+    // View Appointments assigned to doctor
+    @GetMapping("/appointments/{doctorId}")
+    public List<Appointments> getAppointments(@PathVariable Long doctorId) {
+        return appointmentService.getAppointmentsByDoctor(doctorId);
     }
 
-    // Get doctor by ID
-    @GetMapping("/{id}")
-    public Doctors getOne(@PathVariable Long id) {
-        return doctorService.getDoctorById(id);
-    }
+    // Add Prescription
+    @PostMapping("/prescription/add")
+    public Prescriptions addPrescription(@RequestBody Prescriptions prescription) {
+        Long appointment_id = prescription.getAppointment().getAppointment_id();
+        Long patient_id = prescription.getPatient().getPatient_id();
+        Long doctor_id = prescription.getDoctor().getDoctor_id();
+        String details = prescription.getDetails();
 
-    // Get all doctors
-    @GetMapping
-    public List<Doctors> getAll() {
-        return doctorService.getAllDoctors();
-    }
-
-    // Delete doctor
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        doctorService.deleteDoctor(id);
+        return prescriptionService.addPrescription(appointment_id, patient_id, doctor_id, details);
     }
 }
