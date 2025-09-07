@@ -35,4 +35,10 @@ public class PatientService {
 	public void deletePatient(Long id) {
 		patientRepo.deleteById(id);
 	}
+
+	public Patients findByUsername(String username) {
+        Users user = userRepo.findByUsername(username).orElse(null);
+        if (user == null) return null;
+        return patientRepo.findByUser(user);
+    }
 }

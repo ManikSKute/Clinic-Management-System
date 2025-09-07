@@ -3,6 +3,8 @@ package com.clinic.security;
 import com.clinic.entity.Users;
 import com.clinic.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                Collections.singleton(user.getRole()) // Role implements GrantedAuthority
+                Collections.singleton(new SimpleGrantedAuthority(user.getRole().name()))
         );
     }
 }

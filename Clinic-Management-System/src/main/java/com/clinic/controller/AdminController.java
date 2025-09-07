@@ -2,10 +2,15 @@ package com.clinic.controller;
 
 import com.clinic.entity.Doctors;
 import com.clinic.entity.Patients;
+import com.clinic.entity.Users;
 import com.clinic.service.DoctorService;
 import com.clinic.service.PatientService;
+import com.clinic.service.UserService;
+
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,29 +19,41 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AdminController {
 
     private final DoctorService doctorService;
     private final PatientService patientService;
+    private final UserService userService;
 
-    // Manage Doctors
-    @GetMapping("/doctors")
-    public List<Doctors> getAllDoctors() {
-        return doctorService.getAllDoctors();
+    @PostMapping("/doctors")
+    public ResponseEntity<Doctors> addDoctor(@RequestBody Doctors doctor) {
+        Users user = doctor.getUser();
+        Doctors savedDoctor = doctorService.registerDoctor(user, doctor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedDoctor);
     }
-
+    
+    @GetMapping("/doctors")
+    public ResponseEntity<List<Doctors>> getAllDoctors() {
+        return ResponseEntity.ok(doctorService.getAllDoctors());
+    }
+    
     @DeleteMapping("/doctor/{id}")
     public void deleteDoctor(@PathVariable Long id) {
         doctorService.deleteDoctor(id);
     }
-
-    // Manage Patients
-    @GetMapping("/patients")
-    public List<Patients> getAllPatients() {
-        return patientService.getAllPatients();
+    
+    @PostMapping("/receptionists")
+    public ResponseEntity<Users> addReceptionist(@RequestBody Users user) {
+        Users savedUser = userService.createUser(user); 
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
+    @GetMapping("/patients")
+    public ResponseEntity<List<Patients>> getAllPatients() {
+        return ResponseEntity.ok(patientService.getAllPatients());
+    }
+    
     @DeleteMapping("/patient/{id}")
     public void deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);

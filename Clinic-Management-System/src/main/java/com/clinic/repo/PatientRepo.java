@@ -1,10 +1,9 @@
 package com.clinic.repo;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import com.clinic.entity.Patients;
+import com.clinic.entity.Users;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
 public interface PatientRepo extends JpaRepository<Patients, Long> {
+    Patients findByUser(Users user);
 }

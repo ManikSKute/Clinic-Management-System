@@ -6,6 +6,7 @@ import com.clinic.entity.Users;
 import com.clinic.repo.UserRepo;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +32,9 @@ public class UserService {
 
 	public boolean existsByUsername(String username) {
 		return userRepo.existsByUsername(username);
+	}
+
+	public Optional<Users> findByUsername(String username) {
+		return userRepo.findByUsername(username);
 	}
 }

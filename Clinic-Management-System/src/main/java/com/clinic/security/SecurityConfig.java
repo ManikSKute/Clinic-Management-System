@@ -8,28 +8,28 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableMethodSecurity(prePostEnabled = true) 
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
-    private final CustomUserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() // login, register
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/doctor/**").hasRole("DOCTOR")
-                .requestMatchers("/patient/**").hasRole("PATIENT")
-                .requestMatchers("/receptionist/**").hasRole("RECEPTIONIST")
+                .requestMatchers("/api/auth/**", "/index.html", "/login.html", "/register.html", "/css/**", "/js/**").permitAll()
+                .requestMatchers("/dashboards/patient.html").hasAuthority("ROLE_PATIENT")
+                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/doctor/**").hasAuthority("ROLE_DOCTOR")
+                .requestMatchers("/patient/**").hasAuthority("ROLE_PATIENT")
+                .requestMatchers("/receptionist/**").hasAuthority("ROLE_RECEPTIONIST")
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

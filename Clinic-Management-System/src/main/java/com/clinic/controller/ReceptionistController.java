@@ -13,18 +13,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/receptionist")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('RECEPTIONIST')")
+@PreAuthorize("hasAuthority('ROLE_RECEPTIONIST')")
 public class ReceptionistController {
 
     private final AppointmentService appointmentService;
 
-    // View all appointments
     @GetMapping("/appointments")
     public List<Appointments> getAllAppointments() {
         return appointmentService.getAllAppointments();
     }
 
-    // Update status of an appointment
     @PutMapping("/appointment/{id}/status")
     public Appointments updateStatus(@PathVariable Long id, @RequestParam Status status) {
         return appointmentService.updateAppointmentStatus(id, status);

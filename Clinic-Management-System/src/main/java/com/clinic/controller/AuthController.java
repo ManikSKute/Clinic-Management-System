@@ -1,12 +1,16 @@
 package com.clinic.controller;
 
-import com.clinic.entity.Role;
+import com.clinic.dto.AuthRequest;
+import com.clinic.dto.AuthResponse;
+import com.clinic.entity.Patients;
 import com.clinic.entity.Users;
-import com.clinic.repo.UserRepo;
 import com.clinic.security.JwtUtil;
+import com.clinic.service.PatientService;
+import com.clinic.service.UserService;
+
 import lombok.RequiredArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -20,20 +24,21 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private final UserRepo userRepository;
+    private final UserService userService;
+    private final PatientService patientService;
     private final PasswordEncoder passwordEncoder;
 
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        if (userRepository.existsByUsername(request.getUsername())) {
-            return ResponseEntity.badRequest().body("Username is already taken");
-        }
-        Users user = new Users();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.valueOf(request.getRole().toUpperCase()));
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully");
+    @PostMapping("/register/admin")
+    public ResponseEntity<?> register(@RequestBody Users user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
+    }
+    
+    @PostMapping("/register/patient")
+    public ResponseEntity<?> register(@RequestBody Patients patient) {
+        Users user = patient.getUser();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(patientService.registerPatient(user, patient));
     }
 
     @PostMapping("/login")
@@ -42,7 +47,7 @@ public class AuthController {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-            Users user = userRepository.findByUsername(request.getUsername()).get();
+            Users user = userService.findByUsername(request.getUsername()).get();
 
             String token = jwtUtil.generateToken(user.getUsername(), user.getRole().name());
 
@@ -50,30 +55,5 @@ public class AuthController {
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(401).body("Invalid Credentials");
         }
-    }
-}
-
-@Data
-@NoArgsConstructor
-class RegisterRequest {
-    private String username;
-    private String password;
-    private String role; // should be ADMIN, DOCTOR, PATIENT, RECEPTIONIST
-}
-
-@Data
-@NoArgsConstructor
-class AuthRequest {
-    private String username;
-    private String password;
-}
-
-@Data
-@NoArgsConstructor
-class AuthResponse {
-    private String token;
-
-    public AuthResponse(String token) {
-        this.token = token;
     }
 }

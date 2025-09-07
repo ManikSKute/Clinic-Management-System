@@ -2,6 +2,7 @@ package com.clinic.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.clinic.entity.Doctors;
@@ -17,8 +18,10 @@ public class DoctorService {
 
 	private final UserRepo userRepo;
 	private final DoctorRepo doctorRepo;
+	private final PasswordEncoder passwordEncoder;
 	
 	public Doctors registerDoctor(Users user, Doctors doctor) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		Users savedUser = userRepo.save(user);
 		doctor.setUser(savedUser);
 		return doctorRepo.save(doctor);
