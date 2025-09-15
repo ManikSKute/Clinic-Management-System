@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptionist Dashboard - Clinic Management System</title>
+    <link rel="stylesheet" href="/css/receptionist-dashboard-style.css">
+</head>
+<body>
+    <div class="container">
+        <button class="logout" onclick="handleLogout()">Logout</button>
+        <h2>Receptionist Dashboard</h2>
+        <h3>All Appointments</h3>
+        <table id="appointments-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Patient ID</th>
+                    <th>Doctor ID</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class AdminController {
     private final DoctorService doctorService;
     private final PatientService patientService;
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/doctors")
     public ResponseEntity<Doctors> addDoctor(@RequestBody Doctors doctor) {
@@ -45,8 +47,8 @@ public class AdminController {
     
     @PostMapping("/receptionists")
     public ResponseEntity<Users> addReceptionist(@RequestBody Users user) {
-        Users savedUser = userService.createUser(user); 
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+    	user.setPassword(passwordEncoder.encode(user.getPassword()));
+    	return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
     }
 
     @GetMapping("/patients")

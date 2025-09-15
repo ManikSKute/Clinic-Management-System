@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Clinic Management System</title>
+    <link rel="stylesheet" href="/css/doctor-dashboard-style.css">
+</head>
+<body>
+    <div class="container">
+        <button class="logout" onclick="handleLogout()">Logout</button>
+        <h2>Doctor Dashboard</h2>
+        <h3>Add Prescription</h3>
+        <div class="form-group">
+            <label for="appointment-id">Appointment ID</label>
+            <input type="number" id="appointment-id" placeholder="Enter appointment ID" required>
+        </div>
+        <div class="form-group">
+            <label for="patient-id">Patient ID</label>
+            <input type="number" id="patient-id" placeholder="Enter patient ID" required>
+        </div>
+        <div class="form-group">
+            <label for="doctor-id">Doctor ID</label>
+            <input type="number" id="doctor-id" placeholder="Enter doctor ID" required>
+        </div>
+        <div class="form-group">
+            <label for="prescription-details">Prescription Details</label>
+            <textarea id="prescription-details" placeholder="Enter prescription details" required></textarea>
+        </div>
+        <button onclick="addPrescription()">Add Prescription</button>
+        <div id="prescription-error" class="error"></div>
+
+        <h3>My Appointments</h3>
+        <table id="appointments-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Patient ID</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

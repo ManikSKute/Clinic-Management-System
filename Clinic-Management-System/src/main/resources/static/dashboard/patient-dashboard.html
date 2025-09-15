@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - Clinic Management System</title>
+    <link rel="stylesheet" href="/css/patient-dashboard-style.css">
+</head>
+<body>
+    <div class="container">
+        <button class="logout" onclick="handleLogout()">Logout</button>
+        <h2>Patient Dashboard</h2>
+        <h3>Book Appointment</h3>
+        <div class="form-group">
+            <label for="doctor-id">Doctor ID</label>
+            <input type="number" id="doctor-id" placeholder="Enter doctor ID" required>
+        </div>
+        <button onclick="bookAppointment()">Book Appointment</button>
+        <div id="appointment-error" class="error"></div>
+
+        <h3>Doctors</h3>
+        <table id="doctors-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Contact</th>
+                    <th>Availability</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h3>My Prescriptions</h3>
+        <table id="prescriptions-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Appointment ID</th>
+                    <th>Doctor ID</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>
