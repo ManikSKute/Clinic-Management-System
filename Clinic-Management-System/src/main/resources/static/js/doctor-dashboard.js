@@ -35,6 +35,7 @@ async function loadDoctorAppointments() {
             row.innerHTML = `
                 <td>${appointment.appointment_id}</td>
                 <td>${appointment.patient.patient_id}</td>
+                <td>${appointment.patient.name}</td>
                 <td>${appointment.appointment_date}</td>
                 <td>${appointment.appointment_time}</td>
                 <td>${appointment.status}</td>

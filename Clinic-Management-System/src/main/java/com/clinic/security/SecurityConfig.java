@@ -27,7 +27,7 @@ public class SecurityConfig {
             	.requestMatchers("/index.html","/login.html","/admin-registration.html","/patient-registration.html").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/css/**", "/js/**").permitAll()
-                .requestMatchers("dashboard/**").permitAll()
+                .requestMatchers("/dashboard/**").permitAll()
                 .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/doctor/**").hasAuthority("ROLE_DOCTOR")
                 .requestMatchers("/patient/**").hasAuthority("ROLE_PATIENT")

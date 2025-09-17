@@ -11,5 +11,4 @@ import com.clinic.entity.Users;
 public interface UserRepo extends JpaRepository<Users, Long> {
 
 	Optional<Users> findByUsername(String username);
-	boolean existsByUsername(String username);
 }

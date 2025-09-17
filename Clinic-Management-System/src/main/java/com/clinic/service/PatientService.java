@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.clinic.entity.Patients;
 import com.clinic.entity.Users;
 import com.clinic.repo.PatientRepo;
-import com.clinic.repo.UserRepo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,10 +15,10 @@ import lombok.RequiredArgsConstructor;
 public class PatientService {
 
 	private final PatientRepo patientRepo;
-	private final UserRepo userRepo;
+	private final UserService userService;
 	
 	public Patients registerPatient(Users user, Patients patient) {
-		Users savedUser = userRepo.save(user);
+		Users savedUser = userService.createUser(user);
 		patient.setUser(savedUser);
 		return patientRepo.save(patient);
 	}
@@ -37,7 +36,7 @@ public class PatientService {
 	}
 
 	public Patients findByUsername(String username) {
-        Users user = userRepo.findByUsername(username).orElse(null);
+        Users user = userService.findByUsername(username).orElse(null);
         if (user == null) return null;
         return patientRepo.findByUser(user);
     }

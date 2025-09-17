@@ -42,6 +42,7 @@ async function loadAllAppointments() {
                 <td>${appointment.status}</td>
                 <td>
                     <select onchange="updateAppointmentStatus(${appointment.appointment_id}, this.value)">
+                        <option value="PENDING" ${appointment.status === 'PENDING' ? 'selected' : ''}>PENDING</option>
                         <option value="BOOKED" ${appointment.status === 'BOOKED' ? 'selected' : ''}>Booked</option>
                         <option value="CANCELLED" ${appointment.status === 'CANCELLED' ? 'selected' : ''}>Cancelled</option>
                         <option value="COMPLETED" ${appointment.status === 'COMPLETED' ? 'selected' : ''}>Completed</option>

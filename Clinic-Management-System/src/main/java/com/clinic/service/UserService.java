@@ -30,10 +30,6 @@ public class UserService {
         userRepo.deleteById(id);
     }
 
-	public boolean existsByUsername(String username) {
-		return userRepo.existsByUsername(username);
-	}
-
 	public Optional<Users> findByUsername(String username) {
 		return userRepo.findByUsername(username);
 	}
