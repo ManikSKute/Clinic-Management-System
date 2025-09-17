@@ -10,41 +10,87 @@
     <div class="container">
         <button class="logout" onclick="handleLogout()">Logout</button>
         <h2>Patient Dashboard</h2>
-        <h3>Book Appointment</h3>
-        <div class="form-group">
-            <label for="doctor-id">Doctor ID</label>
-            <input type="number" id="doctor-id" placeholder="Enter doctor ID" required>
+        <div class="options">
+            <button class="option-btn" onclick="showSection('view-doctors')">View All Doctors</button>
+            <button class="option-btn" onclick="showSection('book-appointment')">Book Appointment</button>
+            <button class="option-btn" onclick="showSection('view-prescriptions')">My Prescriptions</button>
+            <button class="option-btn" onclick="showSection('view-appointments')">My Appointments</button>
         </div>
-        <button onclick="bookAppointment()">Book Appointment</button>
-        <div id="appointment-error" class="error"></div>
 
-        <h3>Doctors</h3>
-        <table id="doctors-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Specialization</th>
-                    <th>Contact</th>
-                    <th>Availability</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div id="view-doctors" class="section" style="display: none;">
+            <h3>Doctors</h3>
+            <table id="doctors-table">
+                <thead>
+                    <tr>
+                        <th>Doctor ID</th>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                        <th>Contact</th>
+                        <th>Availability</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
 
-        <h3>My Prescriptions</h3>
-        <table id="prescriptions-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Appointment ID</th>
-                    <th>Doctor ID</th>
-                    <th>Details</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div id="book-appointment" class="section" style="display: none;">
+            <h3>Book Appointment</h3>
+            <div class="form-group">
+                <label for="doctor-id">Doctor ID</label>
+                <input type="number" id="doctor-id" placeholder="Enter doctor ID" required>
+            </div>
+            <div class="form-group">
+                <label for="appointment-date">Appointment Date</label>
+                <input type="date" id="appointment-date" required>
+            </div>
+            <div class="form-group">
+                <label for="appointment-time">Appointment Time</label>
+                <input type="time" id="appointment-time" required>
+            </div>
+            <button onclick="bookAppointment()">Book Appointment</button>
+            <div id="appointment-error" class="error"></div>
+            <div id="appointment-success" class="success"></div>
+        </div>
+
+        <div id="view-prescriptions" class="section" style="display: none;">
+            <h3>My Prescriptions</h3>
+            <table id="prescriptions-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Appointment ID</th>
+                        <th>Doctor ID</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="view-appointments" class="section" style="display: none;">
+            <h3>My Appointments</h3>
+            <table id="appointments-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Doctor ID</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
-    <script src="/js/dashboard.js"></script>
+    <script src="/js/patient-dashboard.js"></script>
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+    </script>
 </body>
 </html>

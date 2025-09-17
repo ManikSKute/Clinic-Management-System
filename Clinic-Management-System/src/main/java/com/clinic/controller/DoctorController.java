@@ -2,13 +2,17 @@ package com.clinic.controller;
 
 import com.clinic.dto.miniPrescription;
 import com.clinic.entity.Appointments;
+import com.clinic.entity.Doctors;
 import com.clinic.entity.Prescriptions;
 import com.clinic.service.AppointmentService;
+import com.clinic.service.DoctorService;
 import com.clinic.service.PrescriptionService;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +25,17 @@ public class DoctorController {
 
     private final PrescriptionService prescriptionService;
     private final AppointmentService appointmentService;
+    private final DoctorService doctorService;
+    
+    @GetMapping("/me")
+    public ResponseEntity<Long> getPatientId() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Doctors doctor = doctorService.findByUsername(username);
+        if (doctor != null) {
+            return ResponseEntity.ok(doctor.getDoctor_id());
+        }
+        return ResponseEntity.notFound().build();
+    }
 
     @GetMapping("/appointments/{doctorId}")
     public List<Appointments> getAppointments(@PathVariable Long doctorId) {

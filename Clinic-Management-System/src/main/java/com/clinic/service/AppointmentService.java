@@ -1,7 +1,5 @@
 package com.clinic.service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -25,23 +23,24 @@ public class AppointmentService {
 	private final DoctorRepo doctorRepo;
 	
 	// 1. Book appointment
-	public Appointments bookAppointment(Long patient_id, Long doctor_id) {
-		
-		Patients patient = patientRepo.findById(patient_id)
-				.orElseThrow(()-> new RuntimeException("Patient Not Found For Id : " + patient_id));
-		
-		Doctors doctor = doctorRepo.findById(doctor_id)
-				.orElseThrow(()-> new RuntimeException("Doctor Not Found For Id : " + doctor_id));
-		
-		Appointments appointment = new Appointments();
-		appointment.setPatient(patient);
-		appointment.setDoctor(doctor);
-		appointment.setAppointment_date(LocalDate.now());
-		appointment.setAppointment_time(LocalTime.now());
-		appointment.setStatus(Status.BOOKED);
-		
-		return appointmentRepo.save(appointment);
+	public Appointments bookAppointment(Long doctor_id, Long patient_id, String date, String time) {
+	    
+	    Patients patient = patientRepo.findById(patient_id)
+	            .orElseThrow(() -> new RuntimeException("Patient Not Found For Id : " + patient_id));
+
+	    Doctors doctor = doctorRepo.findById(doctor_id)
+	            .orElseThrow(() -> new RuntimeException("Doctor Not Found For Id : " + doctor_id));
+
+	    Appointments appointment = new Appointments();
+	    appointment.setPatient(patient);
+	    appointment.setDoctor(doctor);
+	    appointment.setAppointment_date(date);
+	    appointment.setAppointment_time(time);
+	    appointment.setStatus(Status.PENDING);
+
+	    return appointmentRepo.save(appointment);
 	}
+
 	
 	// 2. Get appointment by ID
 	public Appointments getAppointmentById(Long id) {

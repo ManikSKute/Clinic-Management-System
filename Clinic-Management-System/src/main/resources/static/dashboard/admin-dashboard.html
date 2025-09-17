@@ -10,77 +10,100 @@
     <div class="container">
         <button class="logout" onclick="handleLogout()">Logout</button>
         <h2>Admin Dashboard</h2>
-        <h3>Add Doctor</h3>
-        <div class="form-group">
-            <label for="doctor-username">Username</label>
-            <input type="text" id="doctor-username" placeholder="Enter username" required>
+        <div class="options">
+            <button class="option-btn" onclick="showSection('add-doctor')">Add Doctor</button>
+            <button class="option-btn" onclick="showSection('add-receptionist')">Add Receptionist</button>
+            <button class="option-btn" onclick="showSection('view-doctors')">View All Doctors</button>
+            <button class="option-btn" onclick="showSection('view-patients')">View All Patients</button>
         </div>
-        <div class="form-group">
-            <label for="doctor-password">Password</label>
-            <input type="password" id="doctor-password" placeholder="Enter password" required>
-        </div>
-        <div class="form-group">
-            <label for="doctor-name">Name</label>
-            <input type="text" id="doctor-name" placeholder="Enter name" required>
-        </div>
-        <div class="form-group">
-            <label for="doctor-specialization">Specialization</label>
-            <input type="text" id="doctor-specialization" placeholder="Enter specialization">
-        </div>
-        <div class="form-group">
-            <label for="doctor-contact">Contact</label>
-            <input type="text" id="doctor-contact" placeholder="Enter contact">
-        </div>
-        <div class="form-group">
-            <label for="doctor-availability">Availability</label>
-            <input type="text" id="doctor-availability" placeholder="Enter availability">
-        </div>
-        <button onclick="addDoctor()">Add Doctor</button>
-        <div id="doctor-error" class="error"></div>
 
-        <h3>Add Receptionist</h3>
-        <div class="form-group">
-            <label for="receptionist-username">Username</label>
-            <input type="text" id="receptionist-username" placeholder="Enter username" required>
+        <div id="add-doctor" class="section" style="display: none;">
+            <h3>Add Doctor</h3>
+            <div class="form-group">
+                <label for="doctor-username">Username</label>
+                <input type="text" id="doctor-username" placeholder="Enter username" required>
+            </div>
+            <div class="form-group">
+                <label for="doctor-password">Password</label>
+                <input type="password" id="doctor-password" placeholder="Enter password" required>
+            </div>
+            <div class="form-group">
+                <label for="doctor-name">Name</label>
+                <input type="text" id="doctor-name" placeholder="Enter name" required>
+            </div>
+            <div class="form-group">
+                <label for="doctor-specialization">Specialization</label>
+                <input type="text" id="doctor-specialization" placeholder="Enter specialization">
+            </div>
+            <div class="form-group">
+                <label for="doctor-contact">Contact</label>
+                <input type="text" id="doctor-contact" placeholder="Enter contact">
+            </div>
+            <div class="form-group">
+                <label for="doctor-availability">Availability</label>
+                <input type="text" id="doctor-availability" placeholder="Enter availability">
+            </div>
+            <button onclick="addDoctor()">Add Doctor</button>
+            <div id="doctor-error" class="error"></div>
         </div>
-        <div class="form-group">
-            <label for="receptionist-password">Password</label>
-            <input type="password" id="receptionist-password" placeholder="Enter password" required>
+
+        <div id="add-receptionist" class="section" style="display: none;">
+            <h3>Add Receptionist</h3>
+            <div class="form-group">
+                <label for="receptionist-username">Username</label>
+                <input type="text" id="receptionist-username" placeholder="Enter username" required>
+            </div>
+            <div class="form-group">
+                <label for="receptionist-password">Password</label>
+                <input type="password" id="receptionist-password" placeholder="Enter password" required>
+            </div>
+            <button onclick="addReceptionist()">Add Receptionist</button>
+            <div id="receptionist-error" class="error"></div>
         </div>
-        <button onclick="addReceptionist()">Add Receptionist</button>
-        <div id="receptionist-error" class="error"></div>
 
-        <h3>Doctors</h3>
-        <table id="doctors-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Specialization</th>
-                    <th>Contact</th>
-                    <th>Availability</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div id="view-doctors" class="section" style="display: none;">
+            <h3>Doctors</h3>
+            <table id="doctors-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                        <th>Contact</th>
+                        <th>Availability</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
 
-        <h3>Patients</h3>
-        <table id="patients-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Contact</th>
-                    <th>Address</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div id="view-patients" class="section" style="display: none;">
+            <h3>Patients</h3>
+            <table id="patients-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Contact</th>
+                        <th>Address</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
-    <script src="/js/dashboard.js"></script>
+    <script src="/js/admin-dashboard.js"></script>
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+    </script>
 </body>
 </html>

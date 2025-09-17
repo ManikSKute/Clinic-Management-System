@@ -1,8 +1,5 @@
 package com.clinic.entity;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,9 +29,11 @@ public class Appointments {
 	@JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id")
 	private Doctors doctor;
 	
-	private LocalDate appointment_date;
+	@Column(nullable = false, length = 20)
+	private String appointment_date;
 	
-	private LocalTime appointment_time;
+	@Column(nullable = false, length = 20)
+	private String appointment_time;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)

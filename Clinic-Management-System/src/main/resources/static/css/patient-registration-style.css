@@ -12,7 +12,7 @@ body {
 .container {
     background-color: white;
     width: 90%;
-    max-width: 800px;
+    max-width: 400px;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -24,35 +24,6 @@ h2 {
     color: #2c3e50;
     font-size: 28px;
     margin-bottom: 20px;
-}
-
-h3 {
-    color: #34495e;
-    font-size: 22px;
-    margin-top: 30px;
-    margin-bottom: 15px;
-}
-
-.options {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.option-btn {
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.option-btn:hover {
-    background-color: #2980b9;
 }
 
 .form-group {
@@ -67,7 +38,7 @@ label {
     margin-bottom: 5px;
 }
 
-input {
+input, select, textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -76,7 +47,12 @@ input {
     box-sizing: border-box;
 }
 
-input:focus {
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: #3498db;
     box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
@@ -98,55 +74,32 @@ button:hover {
     background-color: #2980b9;
 }
 
-.logout {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: auto;
-    padding: 8px 16px;
-    font-size: 16px;
-    background-color: #e74c3c;
-}
-
-.logout:hover {
-    background-color: #c0392b;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
+.toggle-link {
     margin-top: 20px;
 }
 
-th, td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: left;
+.toggle-link p {
+    margin: 10px 0;
     font-size: 14px;
 }
 
-th {
-    background-color: #f2f2f2;
-    color: #2c3e50;
-    font-weight: bold;
+.toggle-link a {
+    color: #3498db;
+    text-decoration: none;
 }
 
-td button {
-    padding: 8px 16px;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-td button:hover {
-    background-color: #c0392b;
+.toggle-link a:hover {
+    text-decoration: underline;
 }
 
 .error {
     color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.success {
+    color: green;
     font-size: 14px;
     margin-top: 10px;
 }

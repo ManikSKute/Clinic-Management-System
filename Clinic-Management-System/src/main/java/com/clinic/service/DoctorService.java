@@ -20,6 +20,12 @@ public class DoctorService {
 	private final DoctorRepo doctorRepo;
 	private final PasswordEncoder passwordEncoder;
 	
+	public Doctors findByUsername(String username) {
+        Users user = userRepo.findByUsername(username).orElse(null);
+        if (user == null) return null;
+        return doctorRepo.findByUser(user);
+    }
+	
 	public Doctors registerDoctor(Users user, Doctors doctor) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		Users savedUser = userRepo.save(user);

@@ -1,5 +1,6 @@
 package com.clinic.controller;
 
+import com.clinic.dto.AppointmentRequest;
 import com.clinic.entity.Appointments;
 import com.clinic.entity.Doctors;
 import com.clinic.entity.Patients;
@@ -43,8 +44,27 @@ public class PatientController {
     }
 
     @PostMapping("/appointment/book/{doctorId}/{patientId}")
-    public Appointments bookAppointment(@PathVariable Long doctorId, @PathVariable Long patientId) {
-        return appointmentService.bookAppointment(patientId, doctorId);
+    public ResponseEntity<Appointments> bookAppointment(
+            @PathVariable Long doctorId,
+            @PathVariable Long patientId,
+            @RequestBody AppointmentRequest request) {
+        try {
+            Appointments appointment = appointmentService.bookAppointment(
+                    doctorId,
+                    patientId,
+                    request.getAppointmentDate(),
+                    request.getAppointmentTime()
+            );
+            return ResponseEntity.ok(appointment);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    
+    @GetMapping("/appointment/{patientId}")
+    public List<Appointments> viewAppointments(@PathVariable Long patientId) {
+        return appointmentService.getAppointmentsByPatient(patientId);
     }
 
     @GetMapping("/prescriptions/{patientId}")
